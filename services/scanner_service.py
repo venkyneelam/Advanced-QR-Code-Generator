@@ -1,8 +1,27 @@
 import re
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import numpy as np  # type: ignore
 from PIL import Image  # type: ignore
-import cv2  # type: ignore
+
+# Module-level handle for cv2 (lazy-loaded to avoid startup import errors)
+cv2 = None
+_cv2_import_attempted = False
+_cv2_import_error: Optional[str] = None
+
+
+def get_cv2():
+    """Lazily loads OpenCV cv2 module to prevent startup import crashes."""
+    global cv2, _cv2_import_attempted, _cv2_import_error
+    if not _cv2_import_attempted:
+        _cv2_import_attempted = True
+        try:
+            import cv2 as _cv2_module  # type: ignore
+            cv2 = _cv2_module
+            _cv2_import_error = None
+        except Exception as exc:
+            cv2 = None
+            _cv2_import_error = str(exc)
+    return cv2
 
 
 def detect_qr_content_type(text: str) -> Dict[str, Any]:
@@ -111,6 +130,17 @@ def scan_qr_image(image_file) -> Dict[str, Any]:
     Decodes a QR code from an uploaded file object or PIL Image.
     Uses OpenCV QRCodeDetector.
     """
+    cv2_module = get_cv2()
+    if cv2_module is None:
+        err_msg = _cv2_import_error or "OpenCV could not be loaded."
+        return {
+            "success": False,
+            "error": (
+                f"OpenCV (cv2) is not available: {err_msg}. "
+                "Please ensure 'opencv-python-headless' is installed in requirements.txt."
+            ),
+        }
+
     try:
         # Open with PIL
         pil_img = Image.open(image_file).convert("RGB")
@@ -119,12 +149,12 @@ def scan_qr_image(image_file) -> Dict[str, Any]:
         # Convert RGB to BGR
         open_cv_image = open_cv_image[:, :, ::-1].copy()
 
-        detector = cv2.QRCodeDetector()
+        detector = cv2_module.QRCodeDetector()
         data, points, _ = detector.detectAndDecode(open_cv_image)
 
         if not data:
             # Try with grayscale enhancement
-            gray = cv2.cvtColor(open_cv_image, cv2.COLOR_BGR2GRAY)
+            gray = cv2_module.cvtColor(open_cv_image, cv2_module.COLOR_BGR2GRAY)
             data, points, _ = detector.detectAndDecode(gray)
 
         if data and data.strip():

@@ -34,7 +34,6 @@ from services.qr_service import (
     format_google_forms,
 )
 from services.export_service import export_png, export_jpg, export_svg, export_pdf
-from services.scanner_service import scan_qr_image
 from services.bulk_service import parse_uploaded_dataset, generate_bulk_qrs
 from services.history_service import (
     init_db,
@@ -588,11 +587,24 @@ elif active_page == "Bulk QR Generator":
 # 9. PAGE: QR CODE SCANNER (Module 10)
 # ===========================================================================
 elif active_page == "QR Scanner":
+    try:
+        from services.scanner_service import scan_qr_image
+        scanner_import_error = None
+    except Exception as exc:
+        scan_qr_image = None
+        scanner_import_error = str(exc)
+
     render_header(
         title="QR Code Scanner & Decoder",
         subtitle="Upload QR images to extract text, inspect links, and detect phone, email, and UPI actions",
         badge="SCANNER",
     )
+
+    if scanner_import_error:
+        st.warning(
+            f"⚠️ **QR Scanner module is currently unavailable:** {scanner_import_error}\n\n"
+            "Please ensure `opencv-python-headless` is properly installed."
+        )
 
     col_s_left, col_s_right = st.columns([1, 1], gap="medium")
 
@@ -619,31 +631,36 @@ elif active_page == "QR Scanner":
             )
 
             if sc_upload:
-                with st.spinner("Analyzing image..."):
-                    scan_res = scan_qr_image(sc_upload)
-
-                if scan_res["success"]:
-                    meta = scan_res["meta"]
-                    st.success(f"✅ Decoded Successfully • **{meta['badge']}**")
-
-                    st.markdown(
-                        f"""
-                        <div style="background: #F9FAFB; padding: 14px; border-radius: 10px; border: 1px solid #E5E7EB; word-break: break-all; font-family: monospace; font-size: 0.95rem; margin-bottom: 14px;">
-                            {scan_res['text']}
-                        </div>
-                        """,
-                        unsafe_allow_html=True,
+                if scan_qr_image is None:
+                    st.error(
+                        f"Cannot process image because the QR scanner module could not be loaded: {scanner_import_error}"
                     )
-
-                    st.info(f"🛡️ **Safety Preview:** {meta['safe_preview']}")
-
-                    if meta.get("is_url") and meta.get("action_url"):
-                        st.link_button("🌐 Open External Link (Safe New Tab)", url=meta["action_url"], type="primary")
-
-                    # Copy assistance
-                    st.text_area("Raw Text (Select and Copy)", value=scan_res["text"], height=80)
                 else:
-                    st.error(scan_res["error"])
+                    with st.spinner("Analyzing image..."):
+                        scan_res = scan_qr_image(sc_upload)
+
+                    if scan_res["success"]:
+                        meta = scan_res["meta"]
+                        st.success(f"✅ Decoded Successfully • **{meta['badge']}**")
+
+                        st.markdown(
+                            f"""
+                            <div style="background: #F9FAFB; padding: 14px; border-radius: 10px; border: 1px solid #E5E7EB; word-break: break-all; font-family: monospace; font-size: 0.95rem; margin-bottom: 14px;">
+                                {scan_res['text']}
+                            </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+
+                        st.info(f"🛡️ **Safety Preview:** {meta['safe_preview']}")
+
+                        if meta.get("is_url") and meta.get("action_url"):
+                            st.link_button("🌐 Open External Link (Safe New Tab)", url=meta["action_url"], type="primary")
+
+                        # Copy assistance
+                        st.text_area("Raw Text (Select and Copy)", value=scan_res["text"], height=80)
+                    else:
+                        st.error(scan_res["error"])
             else:
                 st.info("Upload an image on the left to extract and inspect its QR data.")
 

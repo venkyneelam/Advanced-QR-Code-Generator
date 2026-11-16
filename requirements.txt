@@ -2,7 +2,7 @@ streamlit
 qrcode[pil]
 pillow
 numpy
-opencv-python
+opencv-python-headless
 pandas
 openpyxl
 reportlab
