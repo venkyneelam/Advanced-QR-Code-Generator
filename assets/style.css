@@ -1,0 +1,247 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* Global Theme & Background */
+html, body, [class*="css"], [data-testid="stAppViewContainer"], .stApp {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    background: #F8F7FF !important;
+    color: #211B45 !important;
+}
+
+[data-testid="stHeader"] {
+    background: transparent !important;
+}
+
+/* Container constraints */
+.block-container {
+    max-width: 1160px !important;
+    padding-top: 1.25rem !important;
+    padding-bottom: 2.5rem !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* Card Styling */
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background-color: #FFFFFF !important;
+    border-radius: 16px !important;
+    border: 1px solid #E9DFFF !important;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.05) !important;
+    padding: 1.25rem 1.5rem !important;
+    margin-bottom: 1.25rem !important;
+}
+
+/* Form Inputs */
+.stTextInput input, .stTextArea textarea, .stSelectbox [data-baseweb="select"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    font-size: 0.95rem !important;
+    color: #211B45 !important;
+    transition: all 0.2s ease;
+}
+
+.stTextInput input:focus, .stTextArea textarea:focus {
+    border-color: #8B5CF6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15) !important;
+}
+
+/* Segmented Control / Tabs */
+[data-testid="stSegmentedControl"] {
+    background-color: #F1EFFB !important;
+    border-radius: 12px !important;
+    padding: 4px !important;
+    border: none !important;
+}
+
+[data-testid="stSegmentedControl"] button {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    color: #4B5563 !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+}
+
+[data-testid="stSegmentedControl"] button[aria-pressed="true"] {
+    background-color: #FFFFFF !important;
+    color: #8B5CF6 !important;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.15) !important;
+    font-weight: 700 !important;
+}
+
+/* Tabs Styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid #ECEAFD !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px 8px 0 0 !important;
+    padding: 8px 16px !important;
+    font-weight: 600 !important;
+    color: #4B5563 !important;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #8B5CF6 !important;
+    border-bottom: 2px solid #8B5CF6 !important;
+}
+
+/* Slider Track & Thumb */
+[data-baseweb="slider"] div[role="slider"] {
+    background-color: #8B5CF6 !important;
+    border: 3px solid #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.5) !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Primary Download Button & General Buttons */
+button[kind="primary"], .stDownloadButton button, .stButton button[kind="primary"] {
+    background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%) !important;
+    background-color: #8B5CF6 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    width: 100% !important;
+    box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+button[kind="primary"]:hover, .stDownloadButton button:hover, .stButton button[kind="primary"]:hover {
+    background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%) !important;
+    background-color: #7C3AED !important;
+    box-shadow: 0 6px 20px rgba(109, 40, 217, 0.4) !important;
+    transform: translateY(-1px);
+}
+
+.stButton button[kind="secondary"] {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #211B45 !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton button[kind="secondary"]:hover {
+    border-color: #8B5CF6 !important;
+    color: #6D28D9 !important;
+    background: #F8F7FF !important;
+}
+
+/* ========================================================================== */
+/* PURE WHITE SIDEBAR & OVERLAY REMOVAL */
+/* ========================================================================== */
+section[data-testid="stSidebar"],
+[data-testid="stSidebar"],
+[data-testid="stSidebarContent"],
+[data-testid="stSidebarUserContent"],
+[data-testid="stSidebar"] > div:first-child,
+[data-testid="stSidebarHeader"] {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #211B45 !important;
+    box-shadow: none !important;
+    border-right: 1px solid #E9DFFF !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Remove any dark pseudo-element overlays, blur filters, or shadows */
+section[data-testid="stSidebar"]::before,
+section[data-testid="stSidebar"]::after,
+[data-testid="stSidebar"]::before,
+[data-testid="stSidebar"]::after,
+[data-testid="stSidebarContent"]::before,
+[data-testid="stSidebarContent"]::after {
+    display: none !important;
+    content: none !important;
+    background: transparent !important;
+    opacity: 0 !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* Sidebar Top Padding Optimization */
+[data-testid="stSidebarContent"] {
+    padding-top: 0.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+[data-testid="stSidebarHeader"] {
+    padding: 0.25rem 0.5rem !important;
+    background: transparent !important;
+    height: auto !important;
+}
+
+/* ========================================================================== */
+/* SIDEBAR RADIO NAVIGATION - MATCHING REFERENCE IMAGE */
+/* ========================================================================== */
+[data-testid="stSidebar"] [data-testid="stRadio"] > div {
+    gap: 4px !important;
+}
+
+/* Hide Streamlit default radio circle */
+[data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child {
+    display: none !important;
+}
+
+/* Base style for every navigation item */
+[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 9px 14px !important;
+    margin: 2px 0 !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    color: #211B45 !important;
+    font-size: 0.93rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.18s ease-in-out !important;
+    border: 1px solid transparent !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label p {
+    color: #211B45 !important;
+    font-size: 0.93rem !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+    transition: color 0.18s ease !important;
+}
+
+/* Hover effect */
+[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+    background: #F3E8FF !important;
+    transform: translateX(3px) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label:hover p {
+    color: #6D28D9 !important;
+}
+
+/* Active / Selected item pill style - Light Purple matching reference image */
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
+    background: #EDE9FE !important;
+    color: #6D28D9 !important;
+    border: 1px solid #DDD6FE !important;
+    box-shadow: 0 2px 8px rgba(109, 40, 217, 0.10) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p {
+    color: #6D28D9 !important;
+    font-weight: 700 !important;
+}
